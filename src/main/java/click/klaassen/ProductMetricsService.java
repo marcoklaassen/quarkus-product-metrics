@@ -14,26 +14,32 @@ import org.eclipse.microprofile.metrics.Tag;
 @Slf4j
 public class ProductMetricsService {
 
+  @ConfigProperty(name = "metrics.name")
+  String metricsName;
+
   @ConfigProperty(name = "metrics.products")
   List<String> products;
 
   @ConfigProperty(name = "metrics.locations")
   List<String> locations;
 
+  @ConfigProperty(name = "metrics.increase.min")
+  long min;
+
+  @ConfigProperty(name = "metrics.increase.max")
+  long max;
+
   @Inject MetricRegistry registry;
 
-  private static final long MIN = 0;
-  private static final long MAX = 100;
-
-  @Scheduled(every = "1s")
+  @Scheduled(every = "10s")
   void increment() {
     var numberGenerator = new RandomDataGenerator();
     products.forEach(
         product -> {
           var location = locations.get(numberGenerator.nextInt(0, locations.size() - 1));
-          var size = numberGenerator.nextLong(MIN, MAX);
+          var size = numberGenerator.nextLong(min, max);
           registry
-              .meter("fruit", new Tag("product", product), new Tag("location", location))
+              .meter(metricsName, new Tag("product", product), new Tag("location", location))
               .mark(size);
           log.info("add new metric [{}:{} - {}]", product, size, location);
         });
