@@ -12,7 +12,7 @@ spec:
   source:
     path: .openshift/environments/overlays/prod
     repoURL: https://github.com/PixelJonas/quarkus-product-metrics.git
-    targetRevision: main
+    targetRevision: demo/step-1
   syncPolicy:
     automated:
       prune: true
