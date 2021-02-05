@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: product-metrics-prod
+
+bases:
+  - ../../../manifests/app/base
+
+resources:
+  - namespace.yaml
+
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: backend
+    path: product-metrics-deployment-patch.yaml

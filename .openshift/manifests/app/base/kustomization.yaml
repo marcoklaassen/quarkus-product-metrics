@@ -4,12 +4,7 @@ kind: Kustomization
 generatorOptions:
   disableNameSuffixHash: true
   labels:
-    app.kubernetes.io/part-of: metrics-demo
-
-configMapGenerator:
-  - name: server
-    files:
-      - config/application.properties
+    app.kubernetes.io/part-of: product-metrics
 
 resources:
   - backend-service.yaml

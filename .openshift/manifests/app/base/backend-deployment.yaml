@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server
+  name: backend
   annotations:
     app.openshift.io/vcs-ref: master
     app.openshift.io/vcs-uri: "https://github.com/marcoklaassen/quarkus-product-metrics"
@@ -16,21 +16,16 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: server
+      name: backend
   replicas: 1
   template:
     metadata:
       labels:
-        name: server
+        name: backend
         metrics: "true"
     spec:
       containers:
-        - name: server
-          env:
-            - name: QUARKUS_KUBERNETES_CONFIG_ENABLED
-              value: "true"
-            - name: QUARKUS_KUBERNETES_CONFIG_CONFIG_MAPS
-              value: server
+        - name: backend
           image: quay.io/pixeljonas/quarkus-product-metrics:latest
           imagePullPolicy: Always
           ports:
