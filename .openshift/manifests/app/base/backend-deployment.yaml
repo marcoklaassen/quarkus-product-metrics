@@ -1,0 +1,55 @@
+# Note not currently working, pods constantly terminating and restarting
+# Using DC for now but preserved here to come back to later
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: "https://github.com/marcoklaassen/quarkus-product-metrics"
+  labels:
+    app: product-metrics
+    app.kubernetes.io/name: product-metrics
+    app.kubernetes.io/component: backend
+    app.openshift.io/runtime: quarkus
+    app.kubernetes.io/part-of: product-metrics
+spec:
+  selector:
+    matchLabels:
+      name: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: backend
+        metrics: "true"
+    spec:
+      containers:
+        - name: backend
+          image: quay.io/pixeljonas/quarkus-product-metrics:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: http
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8778
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
