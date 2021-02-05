@@ -9,3 +9,4 @@ generatorOptions:
 resources:
   - backend-service.yaml
   - backend-deployment.yaml
+  - backend-servicemonitor.yaml
