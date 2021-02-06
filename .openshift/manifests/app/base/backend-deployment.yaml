@@ -1,5 +1,3 @@
-# Note not currently working, pods constantly terminating and restarting
-# Using DC for now but preserved here to come back to later
 apiVersion: apps/v1
 kind: Deployment
 metadata:
