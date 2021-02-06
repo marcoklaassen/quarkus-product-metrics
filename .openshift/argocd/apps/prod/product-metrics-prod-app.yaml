@@ -11,7 +11,7 @@ spec:
   project: product-metrics
   source:
     path: .openshift/environments/overlays/prod
-    repoURL: https://github.com/PixelJonas/quarkus-product-metrics.git
+    repoURL: https://github.com/marcoklaassen/quarkus-product-metrics.git
     targetRevision: demo/step-1
   syncPolicy:
     automated:
