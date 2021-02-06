@@ -13,6 +13,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus-plugin.version>1.10.3.Final</quarkus-plugin.version>
+    <quarkus.container-image.group>pixeljonas</quarkus.container-image.group>
+    <quarkus.container-image.name>quarkus-product-metrics</quarkus.container-image.name>
+    <quarkus.container-image.registry>quay.io</quarkus.container-image.registry>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>1.10.3.Final</quarkus.platform.version>
@@ -67,6 +70,14 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-scheduler</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-jib</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -103,6 +114,20 @@
   </build>
   <profiles>
     <profile>
+      <id>podman</id>
+      <activation>
+        <property>
+          <name>podman</name>
+        </property>
+      </activation>
+      <properties>
+        <quarkus.native.container-runtime>podman</quarkus.native.container-runtime>
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.native.container-build>true</quarkus.native.container-build>
+        <quarkus.container-image.builder>podman</quarkus.container-image.builder>
+      </properties>
+    </profile>
+    <profile>
       <id>native</id>
       <activation>
         <property>
@@ -134,9 +159,6 @@
             <groupId>com.coveo</groupId>
             <artifactId>fmt-maven-plugin</artifactId>
             <version>2.10</version>
-            <configuration>
-              <skipSortingImports>true</skipSortingImports>
-            </configuration>
             <executions>
               <execution>
                 <phase>validate</phase>
@@ -145,6 +167,9 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <skipSortingImports>true</skipSortingImports>
+            </configuration>
           </plugin>
         </plugins>
       </build>
