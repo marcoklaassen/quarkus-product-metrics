@@ -22,7 +22,6 @@ spec:
     metadata:
       labels:
         name: backend
-        quarkus-metrics: "true"
         metrics: "true"
     spec:
       containers:
