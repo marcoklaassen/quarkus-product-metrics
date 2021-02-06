@@ -13,6 +13,6 @@ spec:
     - name: http
       port: 8080
   selector:
-    name: server
+    name: backend
   sessionAffinity: None
   type: ClusterIP
