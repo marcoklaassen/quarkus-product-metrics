@@ -38,10 +38,11 @@ public class ProductMetricsService {
         product -> {
           var location = locations.get(numberGenerator.nextInt(0, locations.size() - 1));
           var size = numberGenerator.nextLong(min, max);
+          String fullMetricsName = this.getClass().getCanonicalName() + "." + metricsName;
           registry
-              .meter(metricsName, new Tag("product", product), new Tag("location", location))
+              .meter(fullMetricsName, new Tag("product", product), new Tag("location", location))
               .mark(size);
-          log.info("add new metric [{}:{} - {}]", product, size, location);
+          log.info("add new metric {}: [{}:{} - {}]", fullMetricsName, product, size, location);
         });
   }
 }

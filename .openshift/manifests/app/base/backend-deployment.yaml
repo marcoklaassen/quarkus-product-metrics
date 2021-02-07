@@ -26,6 +26,17 @@ spec:
         - name: backend
           image: quay.io/pixeljonas/quarkus-product-metrics:latest
           imagePullPolicy: Always
+          env:
+            - name: PRODUCTS
+              value: iPhone,iPad,MacBook,AirPod,AppleTV,iMac
+            - name: LOCATIONS
+              value: Munich,Berlin,Hamburg
+            - name: METRIC_NAME
+              value: hardware
+            - name: INCREASE_MIN
+              value: 0
+            - name: INCREASE_MAX
+              value: 3
           ports:
             - containerPort: 8080
               protocol: TCP
