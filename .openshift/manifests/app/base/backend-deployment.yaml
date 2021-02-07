@@ -34,9 +34,9 @@ spec:
             - name: METRIC_NAME
               value: hardware
             - name: INCREASE_MIN
-              value: 0
+              value: "0"
             - name: INCREASE_MAX
-              value: 3
+              value: "3"
           ports:
             - containerPort: 8080
               protocol: TCP
