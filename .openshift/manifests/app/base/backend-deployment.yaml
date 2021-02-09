@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
   annotations:
-    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-ref: main
     app.openshift.io/vcs-uri: "https://github.com/marcoklaassen/quarkus-product-metrics"
   labels:
     app: product-metrics
@@ -24,8 +24,19 @@ spec:
     spec:
       containers:
         - name: backend
-          image: quay.io/pixeljonas/quarkus-product-metrics:latest
+          image: quay.io/pixeljonas/quarkus-product-metrics:v1
           imagePullPolicy: Always
+          env:
+            - name: PRODUCTS
+              value: iPhone,iPad,MacBook,AirPod,AppleTV,iMac
+            - name: LOCATIONS
+              value: Munich,Berlin,Hamburg
+            - name: METRIC_NAME
+              value: hardware
+            - name: INCREASE_MIN
+              value: "0"
+            - name: INCREASE_MAX
+              value: "3"
           ports:
             - containerPort: 8080
               protocol: TCP
