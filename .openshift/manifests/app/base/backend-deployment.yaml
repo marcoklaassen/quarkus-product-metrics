@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: quay.io/pixeljonas/quarkus-product-metrics:v1
+          image: quay.io/pixeljonas/quarkus-product-metrics:v2
           imagePullPolicy: Always
           env:
             - name: PRODUCTS
