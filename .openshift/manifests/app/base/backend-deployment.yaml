@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
   annotations:
-    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-ref: main
     app.openshift.io/vcs-uri: "https://github.com/marcoklaassen/quarkus-product-metrics"
   labels:
     app: product-metrics
